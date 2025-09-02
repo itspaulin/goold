@@ -1,0 +1,7 @@
+# .eslintignore
+eslint.config.mts
+eslint.config.ts
+node_modules/
+dist/
+coverage/
+*.d.ts
