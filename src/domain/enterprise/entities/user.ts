@@ -34,9 +34,6 @@ export class User extends Entity<UserProps> {
   }
 
   set email(email: string) {
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      throw new Error("Invalid email format.");
-    }
     this.props.email = email.trim().toLowerCase();
     this.touch();
   }
