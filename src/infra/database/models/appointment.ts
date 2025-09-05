@@ -4,11 +4,14 @@ import {
   Model,
   DataType,
   ForeignKey,
+  BelongsTo,
 } from "sequelize-typescript";
 import User from "./user";
+import Room from "./room";
+import { AppointmentStatus } from "@/domain/enterprise/entities/appointment";
 
 @Table
-export default class Login extends Model {
+export default class Appointment extends Model {
   @Column({
     type: DataType.UUID,
     primaryKey: true,
@@ -23,29 +26,31 @@ export default class Login extends Model {
   })
   userId!: string;
 
+  @ForeignKey(() => Room)
   @Column({
-    type: DataType.STRING,
+    type: DataType.UUID,
     allowNull: false,
   })
-  email!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  password!: string;
-
-  @Column({
-    type: DataType.ENUM("admin", "customer"),
-    allowNull: false,
-  })
-  role!: "admin" | "customer";
+  roomId!: string;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
+    allowNull: false,
   })
-  removedAt!: Date | null;
+  date!: Date;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  time!: string;
+
+  @Column({
+    type: DataType.ENUM(...Object.values(AppointmentStatus)),
+    allowNull: false,
+    defaultValue: AppointmentStatus.PENDING,
+  })
+  status!: AppointmentStatus;
 
   @Column({
     type: DataType.DATE,
@@ -59,4 +64,16 @@ export default class Login extends Model {
     allowNull: true,
   })
   updatedAt!: Date | null;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  canceledAt!: Date | null;
+
+  @BelongsTo(() => User)
+  user!: User;
+
+  @BelongsTo(() => Room)
+  room!: Room;
 }

@@ -1,9 +1,9 @@
 import { Table, Column, Model, DataType, HasOne } from "sequelize-typescript";
+import Login from "./login";
 import { Address } from "@/domain/enterprise/entities/value-objects/address";
-import { LoginModel } from "./login";
 
 @Table
-export class UserModel extends Model {
+export default class User extends Model {
   @Column({
     type: DataType.UUID,
     primaryKey: true,
@@ -50,6 +50,6 @@ export class UserModel extends Model {
   })
   updatedAt!: Date | null;
 
-  @HasOne(() => LoginModel, "userId")
-  login!: LoginModel;
+  @HasOne(() => Login, "userId")
+  login!: Login;
 }

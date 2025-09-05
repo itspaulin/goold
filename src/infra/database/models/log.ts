@@ -4,11 +4,12 @@ import {
   Model,
   DataType,
   ForeignKey,
+  BelongsTo,
 } from "sequelize-typescript";
 import User from "./user";
 
 @Table
-export default class Login extends Model {
+export default class Log extends Model {
   @Column({
     type: DataType.UUID,
     primaryKey: true,
@@ -27,25 +28,13 @@ export default class Login extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  email!: string;
+  action!: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  password!: string;
-
-  @Column({
-    type: DataType.ENUM("admin", "customer"),
-    allowNull: false,
-  })
-  role!: "admin" | "customer";
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  removedAt!: Date | null;
+  description!: string;
 
   @Column({
     type: DataType.DATE,
@@ -59,4 +48,7 @@ export default class Login extends Model {
     allowNull: true,
   })
   updatedAt!: Date | null;
+
+  @BelongsTo(() => User)
+  user!: User;
 }
