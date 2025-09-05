@@ -84,4 +84,12 @@ export class Address extends ValueObject<AddressProps> {
       this.complement ? `, ${this.complement}` : ""
     }`;
   }
+
+  toJSON(): AddressProps {
+    return { ...this.props };
+  }
+
+  static fromJSON(props: AddressProps): Address {
+    return new Address(props);
+  }
 }
