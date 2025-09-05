@@ -15,8 +15,8 @@ export interface AppointmentProps {
   time: string;
   status: AppointmentStatus;
   createdAt: Date;
-  updatedAt?: Date | null;
-  canceledAt?: Date | null;
+  updatedAt: Date | null;
+  canceledAt: Date | null;
 }
 
 export class Appointment extends AggregateRoot<AppointmentProps> {
